@@ -1,4 +1,7 @@
+import matplotlib.pyplot as plt
+import networkx as nx
 import heapq
+
 
 class Graph:
     def __init__(self):
@@ -28,45 +31,47 @@ class Graph:
     
     def get_neighbors(self, node: str):
         return self.G[node] if node in self.G else {}
-    
+   
     def dijkstra(self, start_node: str, end_node: str):
-        distancia_caminhada = {node: float('inf') for node in self.G} # Marca todos os nós como infinito
-        distancia_caminhada[start_node] = 0 # Marca o nó inicial como 0
+        dijkstra = {node: float('inf') for node in self.G}
+        dijkstra[start_node] = 0
 
-        predecessors = {node: None for node in self.G} # Nós predecessores
+        predecessores = {node:None for node in self.G}
 
-        fila_de_prioridade = [(0, start_node)] # Criação de uma fila de prioridade utilizando Heap !
-        heapq.heapify(fila_de_prioridade)
+        fila = [(0, start_node)]
 
-        while fila_de_prioridade:
-            distancia_atual, node_atual = heapq.heappop(fila_de_prioridade)
+        heapq.heapify(fila)
 
-            if distancia_atual > distancia_caminhada[node_atual]:
-                continue
+        while fila:
+            peso, no = heapq.heappop(fila)
+            
+            for vizinho, peso_vizinho in self.G[no].items():
+                distancia = peso + peso_vizinho
 
-            for vizinho, peso in self.G[node_atual].items():
-                distancia = distancia_atual + peso
 
-                if distancia < distancia_caminhada[vizinho]:
-                    distancia_caminhada[vizinho] = distancia
-                    predecessors[vizinho] = node_atual
-                    heapq.heappush(fila_de_prioridade, (distancia, vizinho))
+                if distancia < dijkstra[vizinho]:
+                    dijkstra[vizinho] = distancia
+                    predecessores[vizinho] = no
+                    heapq.heappush(fila, (distancia, vizinho))
 
         caminho = []
-        node_atual = end_node
-        while node_atual:
-            caminho.insert(0, node_atual)
-            node_atual = predecessors[node_atual]
+        no_final = end_node
 
-        if caminho[0] != start_node:
-            return None
-        
-        return caminho, distancia_caminhada[node_atual]
+        while no_final:
+            caminho.insert(0, no_final)
+            no_final = predecessores[no_final]
+
+        return caminho
+
+    def atualizar_grafo(self, caminho):
+        novo_grafo = {}
+        for node in caminho:
+            novo_grafo[node] = {}
+        for i in range(len(caminho) - 1):
+            novo_grafo[caminho[i]][caminho[i+1]] = self.G[caminho[i]][caminho[i+1]]
+        self.G = novo_grafo
 
     def plot_graph(self):
-        import matplotlib.pyplot as plt
-        import networkx as nx
-        
         G = nx.DiGraph()
         for start_node, neighbors in self.G.items():
             for end_node, weight in neighbors.items():
