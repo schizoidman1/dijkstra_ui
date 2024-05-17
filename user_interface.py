@@ -64,7 +64,7 @@ class DijkstraGraphApp(QWidget):
         self.setLayout(self.layout)
 
     def add_edge_func(self):
-        """Adiciona uma aresta ao grafo."""
+        """Adiciona uma aresta ao grafo"""
         start_node = self.start_node_input.text()
         end_node = self.end_node_input.text()
         weight = self.weight_input.text()
@@ -78,12 +78,12 @@ class DijkstraGraphApp(QWidget):
                 self.start_node_input.clear()
                 self.end_node_input.clear()
             except ValueError:
-                self.text_output.append('Peso inválido. Por favor, insira um número.')
+                self.text_output.append('Peso inválido. Por favor, insira um número')
         else:
-            self.text_output.append('Por favor, insira valores para todos os campos.')
+            self.text_output.append('Por favor, insira valores para todos os campos')
 
     def delete_edge_func(self):
-        """Remove uma aresta do grafo."""
+        """Remove uma aresta do grafo"""
         start_node = self.start_node_input.text()
         end_node = self.end_node_input.text()
 
@@ -95,14 +95,15 @@ class DijkstraGraphApp(QWidget):
             self.text_output.append('Por favor, insira valores para os nós inicial e de destino.')
 
     def dijkstra_func(self):
-        """Executa o algoritmo de Dijkstra."""
+        """Executa o algoritmo de Dijkstra"""
         start_node = self.start_node_input.text()
         end_node = self.end_node_input.text()
 
         if start_node and end_node:
             path = self.graph.dijkstra(start_node, end_node)
+            peso = path[1]
             if path:
-                self.text_output.append(f'Caminho mais curto de {start_node} para {end_node}: {path}')
+                self.text_output.append(f'Caminho mais curto de {start_node} para {end_node}: {path[0]} | peso: {peso}')
                 self.graph.atualizar_grafo(path)
                 self.update_canvas()
             else:
@@ -111,7 +112,7 @@ class DijkstraGraphApp(QWidget):
             self.text_output.append('Por favor, insira valores para os nós inicial e de destino.')
 
     def clear_func(self):
-        """Limpa a visualização do grafo e o texto de saída."""
+        """Limpa a visualização do grafo e o texto de saída"""
         self.graph = Graph()
         self.text_output.clear()
         self.figure.clear()
@@ -119,7 +120,7 @@ class DijkstraGraphApp(QWidget):
         self.text_output.append('Tela limpa')
 
     def update_canvas(self):
-        """Atualiza o canvas do matplotlib com a visualização atual do grafo."""
+        """Atualiza o canvas do matplotlib com a visualização atual do grafo"""
         self.figure.clear()
         ax = self.figure.add_subplot(111)
         G = nx.DiGraph()

@@ -61,7 +61,7 @@ class Graph:
             caminho.insert(0, no_final)
             no_final = predecessores[no_final]
 
-        return caminho
+        return caminho, dijkstra[end_node]
 
     def atualizar_grafo(self, caminho):
         novo_grafo = {}

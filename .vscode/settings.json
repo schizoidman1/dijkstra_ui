@@ -5,6 +5,7 @@
         "caminho",
         "distancia",
         "networkx",
+        "predecessores",
         "prioridade",
         "vizinho"
     ]

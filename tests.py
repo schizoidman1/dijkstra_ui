@@ -17,8 +17,12 @@ a = {
     'F': {}
 }
 
-distancias = float('inf')
-distancia = 1
+from graph import Graph
 
-if distancia < distancias:
-    print('1 é menor que infinito')
+g = Graph()
+
+g.add_edge(start_node='A', end_node='B', weight=10)
+
+path = g.dijkstra('A', 'B')
+
+print(path[1])
