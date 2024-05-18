@@ -104,7 +104,7 @@ class DijkstraGraphApp(QWidget):
             peso = path[1]
             if path:
                 self.text_output.append(f'Caminho mais curto de {start_node} para {end_node}: {path[0]} | peso: {peso}')
-                self.graph.atualizar_grafo(path)
+                self.graph.atualizar_grafo(path[0])
                 self.update_canvas()
             else:
                 self.text_output.append(f'Não foi possível encontrar um caminho de {start_node} para {end_node}')

@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
         "atual",
+        "atualizar",
         "caminhada",
         "caminho",
         "distancia",
+        "grafo",
         "networkx",
         "predecessores",
         "prioridade",
